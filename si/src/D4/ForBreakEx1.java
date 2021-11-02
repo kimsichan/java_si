@@ -16,7 +16,7 @@ public class ForBreakEx1 {
 		 * 종료합니다.
 		 * */
 		Scanner scan = new Scanner(System.in);
-		int num;
+		int num;//for문으로 작성한 경우 num의 초기값에 따라 실행이 안될 수 있다.
 		for ( ; ; ) {
 			System.out.print("정수를 입력하세요 : ");
 			num = scan.nextInt();
