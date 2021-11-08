@@ -27,7 +27,7 @@ public class ForGCDEEx1 {
 	 
 	}
 	if(count == 2) {
-		System.out.println(num1 + "은 소수");2
+		System.out.println(num1 + "은 소수");
 	}
 		else {
 			System.out.println(num1 + "은 소수가 아님");

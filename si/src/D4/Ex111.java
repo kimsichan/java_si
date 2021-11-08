@@ -1,5 +1,6 @@
 package D4;
-public class ForAlphabetEx2 {
+
+public class Ex111 {
 
 	public static void main(String[] args) {
 		/* 'a'부터 'z'까지 출력하는 코드를 for문을 이용하여 작성.
@@ -9,16 +10,9 @@ public class ForAlphabetEx2 {
 		 *      규칙성: ch를 출력
 		 */
 		int i = 0; 
-		for(; i<26 ; i++) {
-			//method1 
-			System.out.print((char)('a' + i));
+		for(;i<26;i++) {
+			System.out.print((char)('a'+i));
 		}
-		//method2
-		//char ch;
-		//for(ch = 'a' ; ch <= 'z'; ch++ ) {
-			//System.out.print(ch);
-		}
-
 	}
 
-//}
+}

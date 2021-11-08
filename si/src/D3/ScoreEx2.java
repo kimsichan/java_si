@@ -1,5 +1,7 @@
 package D3;
 
+import java.util.Scanner;
+
 public class ScoreEx2 {
 
 	public static void main(String[] args) {
