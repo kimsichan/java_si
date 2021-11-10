@@ -19,6 +19,7 @@ public class ClassEx1 {
 		System.out.println(car1.count + " 인승 ");
 		//기본 생성자를 제공하지 않은 Scanner 클래스
 		//Scanner scan = new Scanner();
+		car1.turnoff();
 	}
 
 }
