@@ -1,4 +1,4 @@
-package day10;
+package D10;
 
 public class Ellipse {
 	private int left, top, right, bottom;

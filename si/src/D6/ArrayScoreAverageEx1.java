@@ -2,8 +2,6 @@ package D6;
 
 import java.util.Scanner;
 
-import com.sun.tools.jdeprscan.scan.Scan;
-
 public class ArrayScoreAverageEx1 {
 
 	public static void main(String[] args) {

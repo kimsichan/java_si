@@ -1,4 +1,4 @@
-package day10;
+package D10;
 
 public class Rect2 {
 	//양 끝점을 이용한 사각형(그림판기준 : 위의점 y < 아래점 y)

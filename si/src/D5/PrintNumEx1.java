@@ -33,8 +33,8 @@ public class PrintNumEx1 {
 			}
 			System.out.println();
 		}
-	}
 	for(i =1; i<=3; i++) {
 		System.out.print(i+" ");
+	}
 	}
 }

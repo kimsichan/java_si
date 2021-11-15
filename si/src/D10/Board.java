@@ -1,4 +1,4 @@
-package day10;
+package D10;
 
 public class Board {
 	//게시글번호, 제목, 작성자, 조회수, 내용, 작성일 등

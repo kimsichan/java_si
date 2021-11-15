@@ -12,7 +12,6 @@ public class HomeworkEllipse {
 		Scanner scan = new Scanner(System.in);
 		ExaShape list [] = new ExaShape[10];
 		ExaShape del [] = new ExaShape[10];
-		int sw =0;
 		
 		for(int i = 0 ; i<list.length;i++) {
 			System.out.println("메뉴"); 
@@ -43,11 +42,6 @@ public class HomeworkEllipse {
 				
 			}
 			if(a==3) {
-				System.out.println("dd1 : "+list[i-1]);
-				del[sw]= list[i-1];
-				list[i-1]= null;
-				sw++;
-				System.out.println("dd2 : "+list[i-1]);
 			}
 			
 			

@@ -1,4 +1,4 @@
-package day10;
+package D10;
 
 public class ClassShapeEx1 {
 

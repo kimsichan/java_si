@@ -1,6 +1,6 @@
 package D5;
 
-public class doWhileEx1 {
+public class DoWhileEx1 {
 
 	public static void main(String[] args) {
 		/*do while문으로 Hello 5번
@@ -17,7 +17,6 @@ public class doWhileEx1 {
 	System.out.println("for문을 이용 ");
 	for(i=10; 1 <= 5; i++) {
 		System.out.println(i + " ");
-	}
 	System.out.println();
 	System.out.println("do while문을 이용");
 	i = 10;
@@ -25,6 +24,7 @@ public class doWhileEx1 {
 		System.out.println(i + " ");
 		i++;
 	}while(i<=5);
+	}
 	}
 
 }

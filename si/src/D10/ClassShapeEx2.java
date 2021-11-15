@@ -1,4 +1,4 @@
-package day10;
+package D10;
 
 public class ClassShapeEx2 {
 	//타원을 나타내는 클래스를 생성하고, 타원 클래스의 객체를 만들고, 테스트하세요.
