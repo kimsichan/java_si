@@ -5,15 +5,15 @@ import java.util.Scanner;
 
 
 
-public class HomeworkEllipse {
+public class HomeworkShape {
 
 	public static void main(String[] args) {
 		
 		Scanner scan = new Scanner(System.in);
 		ExaShape list [] = new ExaShape[10];
 		ExaShape del [] = new ExaShape[10];
-		
-		for(int i = 0 ; i<list.length;i++) {
+		ExaShape re [] = new ExaShape[10];
+ 		for(int i = 0 ; i<list.length;i++) {
 			System.out.println("메뉴"); 
 			System.out.println("1. 도형그리기");
 			System.out.println("2. 다시실행");
