@@ -37,7 +37,8 @@ public class ExbListEx3 {
 					System.out.println("일치하는 학생 정보가 없습니다.");
 				}
 				break;
-			case 4:
+			//학생 정보 수정
+			case 4: modify(menu, menu, menu, null, menu, menu, menu, scan);
 				break;
 			case 5:	break;
 			default : System.out.println("잘못된 메뉴입니다.");
@@ -119,7 +120,8 @@ public class ExbListEx3 {
 		System.out.println("1. 학생정보 추가");
 		System.out.println("2. 전체 학생정보 출력");
 		System.out.println("3. 학생 정보 삭제");
-		System.out.println("4. 프로그램 종료");
+		System.out.println("4. 학생 정보 수정");
+		System.out.println("5. 프로그램 종료");
 		
 		System.out.print("메뉴를 선택하세요 : ");
 	}
@@ -154,5 +156,18 @@ public class ExbListEx3 {
 		/*방법2 : 학생 정보를 삭제했을 때 해당 학생 정보가 있으면 삭제되었습니다
 		 * 		 없으면 삭제할 학생 정보가 없습니다를 출력*/
 		return stdList.remove(std);
+	}
+	public static void modify(int grade, int classNum, int num, String name, int kor, int eng, int math, Scanner scan) {
+		
+		System.out.println("수정할 학생 정보를 입력해주세요");
+		System.out.print("학년 : ");
+		grade = scan.nextInt();
+		System.out.print("학반 : ");
+		classNum = scan.nextInt();
+		System.out.print("번호 : ");
+		num = scan.nextInt();
+		ExbStudent std = new ExbStudent(grade, classNum, num, "", 0, 0, 0);
+		System.out.println("잘못된 학생 정보는 수정할 수 없습니다.");
+			
 	}
 }
