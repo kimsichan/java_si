@@ -17,7 +17,7 @@ public class ExfBoard2{
 	 * 리턴타입 : 없음 => void 
 	 * 메소드명 : modify
 	 * */
-	public void modift(String title,String contents) {
+	public void modify(String title,String contents) {
 		this.title = title;
 		this.contents = contents;
 	}

@@ -79,7 +79,7 @@ public class ExfBoardEx3 {
 		String writer = scan.nextLine();
 		
 		//입력한 정보를 이용하여 게시글 하나 생성
-		ExfBoard board = new ExfBoard(title, contents, writer);
+		ExfBoard2 board = new ExfBoard2(title, contents, writer);
 		
 		//생성된 게시글을 리스트에 추가
 		list.add(board);
@@ -87,7 +87,7 @@ public class ExfBoardEx3 {
 		bar();
 	}
 	public static void display(List<ExfBoard2> list) {
-		for(ExfBoard tmp : list ) {
+		for(ExfBoard2 tmp : list ) {
 			bar();
 			System.out.println(tmp);
 			bar();
@@ -105,7 +105,7 @@ public class ExfBoardEx3 {
 		String contents = scan.nextLine();
 		
 		//리스트에서 수정할 게시글 정보를 가져옴
-		ExfBoard tmp = new ExfBoard();
+		ExfBoard2 tmp = new ExfBoard2();
 		tmp.setNum(num);
 		int index = list.indexOf(tmp);
 		
@@ -128,7 +128,7 @@ public class ExfBoardEx3 {
 		int num = scan.nextInt();
 		
 		//리스트에 해당 게시글이 있는지 확인
-		ExfBoard tmp = new ExfBoard();
+		ExfBoard2 tmp = new ExfBoard2();
 		tmp.setNum(num);
 		int index = list.indexOf(tmp);
 		

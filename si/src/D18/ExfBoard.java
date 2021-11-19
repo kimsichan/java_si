@@ -6,7 +6,8 @@ import java.util.Scanner;
 //클래스 변수를 이용하여 게시글 번호를 관리
 public class ExfBoard {
 	//필요한 정보 => 멤버 변수
-	private int num, views;
+	int num;
+	private int views;
 	private String title, contents, date, writer;
 	//필요한 기능 => 메소드
 	
