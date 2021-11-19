@@ -9,15 +9,28 @@ public class PolymorphismEx1 {
 		calling(p);
 		calling(sp);
 		calling(fp);
-		
+		Human h1 = new Human(p);
+		Human h2 = new Human(sp);
+		Human h3 = new Human(fp);
+		h1.p.get();
+		h2.p.get();
+		h3.p.get();
 	}
-	//매개변수의 다양성
-	
+	//매개변수의 다양성 : 매개변수에 객체들의 공통된 부모로 설정하여
+	//				: 다양한 클래스의 객체들이 올 수 있게 하는 것
 	public static void calling(Phone p) {
 		p.call();
 	}
 	
 }
+class Human{
+	Phone p;
+	public Human(Phone p) {
+		this.p=p;
+	}
+}
+
+
 class Phone{
 	public String phoneNum;
 	
