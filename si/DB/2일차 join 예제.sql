@@ -33,3 +33,13 @@ select pr_name from lecture
     left join professor
 		on pr_num = le_pr_num
     where su_title = '컴퓨터 개론';
+    
+-- 컴퓨터 개론 3분반 강의를 듣는 학생들의 명단을 확인하는 쿼리를 작성하세요. 
+-- 컴퓨터 개론 3분반 강의를 수강하는 학생들의 명단을 확인하는 쿼리를 작성하세요. 
+-- 수강테이블
+select * from course
+	join subject
+		on co_su_num = su_num
+	join student
+		on co_st_num = st_num
+	where su_title = '컴퓨터 개론' and su_class_num = 3;	
