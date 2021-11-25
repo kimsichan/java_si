@@ -43,7 +43,7 @@ select 제품명, 단가 from 제품
 -- all() : 전부를 만족하는 경우들만 확인. and 느낌
 select 제품명, 단가 from 제품
 	where 단가 >= all(select 단가 from 제품 where 제품명 in ('얼큰라면','그냥만두'));
--- any() : 하나이상 만족하는 경우들만 확인. or 느낌
+-- any() : 하나이상 만족하는 경우들만 확인. or 느낌s
 -- 그냥만두의 가격보다 같거나 얼큰라면의 가격보다 크거나 같은 제품의 제품명과 단가를 확인
 select 제품명, 단가 from 제품
 	where 단가 >= (select 단가 from 제품 where 제품명 = '얼큰라면')
