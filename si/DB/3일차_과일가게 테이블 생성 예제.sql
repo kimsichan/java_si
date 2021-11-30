@@ -1,5 +1,5 @@
--- create database fruit_si
-use fruit_si;
+create database fruit_si
+-- use fruit_si;
 CREATE TABLE `fruit` (
 	`fr_name`	varchar(30)	NOT NULL,
 	`fr_price`	int	not NULL default 0,
@@ -55,7 +55,7 @@ ALTER TABLE `buy` ADD CONSTRAINT `FK_BUY_FRUIT` foreign key  (
 
 ALTER TABLE `buy` ADD CONSTRAINT `FK_BUY_STORE` foreign key (
 	`bu_st_name`
-)REFERENfruitCES `fruit`(`st_name`);
+)REFERENCES `fruit`(`st_name`);
 
 ALTER TABLE `sell` ADD CONSTRAINT `FK_SELL_FRUIT` foreign key (
 	`se_fr_name`
