@@ -6,7 +6,7 @@ public class ClassEx3 {
 	// 고등학교 학생 정보를 관리하기 위한 클래스를 생성하고, 테스트해보세요 .
 	// 그린고등학교에 다니는 1학년 1반 1번 홍길동 학생 객체를 생성하고,
 	// 학생 정보를 출력해보세요.
-		HighSchoolStudent std1 = new HighSchoolStudent("그린고등학교","홍길동",1,1,1);
+		HighSchoolStudent1232 std1 = new HighSchoolStudent11("그린고등학교","홍길동",1,1,1);
 		std1.printInfo();
 		
 	}

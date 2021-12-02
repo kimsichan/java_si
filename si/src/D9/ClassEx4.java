@@ -21,9 +21,9 @@ public class ClassEx4 {
 	System.out.println("번호 : " + num1);
 	
 	/* 학생 1명의 정보를 관히라는 예제 : 클래스 사용 HighSchoolStudent */
-	HighSchoolStudent std = new HighSchoolStudent("그린고등학교","홍길동",1,1,1);
+	HighSchoolStudent1 std = new HighSchoolStudent1("그린고등학교","홍길동",1,1,1);
 	std.printInfo();
-	HighSchoolStudent std1 = new HighSchoolStudent("그린고등학교","임꺽정",1,1,2);
+	HighSchoolStudent1 std1 = new HighSchoolStudent1("그린고등학교","임꺽정",1,1,2);
 	std1.printInfo();
 	}
 	

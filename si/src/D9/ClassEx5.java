@@ -10,7 +10,7 @@ public class ClassEx5 {
 	
 	
 	/* 학생 1명의 정보를 관히라는 예제 : 클래스 사용 HighSchoolStudent */
-	HighSchoolStudent std[] = new HighSchoolStudent[size];
+	HighSchoolStudent1 std[] = new HighSchoolStudent1[size];
 	
 	}
 	
