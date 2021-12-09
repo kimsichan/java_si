@@ -6,17 +6,17 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>애니메이션 예제</title>
 	<style>
-		.box{ height: 100px; width: 200px;position: relative; background: red;
-		animation-name: move-box; animation-duration: 3s;
+		.box{ height: 100px; width: 250px;position: relative; background: red;
+		animation-name: move-box; animation-duration: 3s; font-size: 35px;
 		animation-iteration-count: infinite;}
 		@keyframes move-box {
 			0%{left: 0%;}
-			50%{left: calc(100%-200px);}
+			50%{left: calc(100% - 200px);}
 			100%{left: 0%;}
 		}
 	</style>
 </head>
 <body>
-	<div class="box"></div>
+	<div class="box">유아지 화이팅</div>
 </body>
 </html>
