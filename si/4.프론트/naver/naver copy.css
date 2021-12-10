@@ -57,24 +57,67 @@
 .menu-container-box{
     height: 100%; 
 }
-.menu-container-box > .group-nav{
-    width: 1130px; height: 52px; box-sizing: border-box ;
-    padding: 11px 270px 11px 0; overflow: hidden; position: relative;
-    background-color: red; 
-    display: block; 
+.menu-container{
+    padding: 11px 0 ; float: left; height: 100%;  box-sizing: border-box;
 }
-.menu-container-box > .group-nav > .list-nav,
-.menu-container-box > .group-nav > .list-nav2{
-    width: 396.562px; height: 30px; background: royalblue; float: left;
-    font-size: 15px; line-height: 30px; font-weight: 700; color: #03c75a; letter-spacing: -.3px; display: flex;
-}
-.menu-container-box > .group-nav > ul > li{
-    float: left; margin-left: 10px; 
-}
-.menu-container-box > .group-nav > .list-nav::after,
-.menu-container-box > .group-nav > .list-nav2::after,
-.menu-container-box > .group-nav > ul > li::after{
+.menu-container::after, 
+.menu-container .green-menu-box.menu::after,
+.menu-container .black-menu-box.menu::after{
     clear: both; content: ''; display: block;
+}
+.menu-container .green-menu-box .menu-item,
+.menu-container .black-menu-box .menu-item{
+    float: left ; margin-left: 12px;
+}
+.menu-container .green-menu-box .menu-item:first-child{
+    margin-left: 0;
+}
+.menu-container .green-menu-box .menu-link,
+.menu-container .black-menu-box .menu-link{
+    color: #03c75a; font-size: 15px; line-height: 30px;font-weight: 700; letter-spacing: -.3px;
+}
+.menu-container .black-menu-box .menu-link{
+    color: black;
+}
+.menu-container .green-menu-box,
+.menu-container .black-menu-box{
+    float: left;
+}
+.menu-container .icon-mail{
+    display: inline-block; width: 21px;height: 21px; 
+    background-image: url(https://s.pstatic.net/static/www/img/uit/2021/sp_main_5f355c.png);
+    background-size: 444px 439px; background-position: -420px -279px;
+    margin: 3px 9px 0 0; vertical-align: top;
+}
+.menu-container .icon-shopping,
+.menu-container .icon-shopping-live{
+    display: block; width: 24px;height: 20px; 
+    background-image: url(https://s.pstatic.net/static/www/img/uit/2021/sp_main_5f355c.png);
+    background-size: 444px 439px; background-position: -420px -232px;
+    margin-top: 5px; 
+}
+.menu-container .icon-shopping-live{
+    width: 54px; background-position: -202px -306px;
+}
+.menu-container .icon-tv{
+    display: inline-block; width: 12px;height: 14px; 
+    background-image: url(https://s.pstatic.net/static/www/img/uit/2021/sp_main_5f355c.png);
+    background-size: 444px 439px; background-position: -256px -212px;
+    margin: 9px 2px 0 0; vertical-align: top;
+}
+.menu-container .btn-more{
+    float: left; line-height: 30px; margin-left: 17px; font-size: 13px; 
+    color: #202020; 
+}
+.menu-container .btn-more::after{
+    display: inline-block; width: 11px; height: 7px; margin-left: 7px;
+    vertical-align: 2px;
+    background-image: url(https://s.pstatic.net/static/www/img/uit/2021/sp_main_5f355c.png);
+    background-size: 444px 439px; background-position: -83px -296px;
+    content: '';
+}
+.menu-container .btn-more:hover{
+    text-decoration: underline;
 }
 
 
