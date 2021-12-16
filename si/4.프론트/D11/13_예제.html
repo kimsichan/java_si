@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<script src="../js/jquery.min.js"></script>
+</head>
+<body>
+	<input type='button' class="btn" name="plus" value='+'/>
+	<div class="res">0</div>
+	<input type='button' class="btn" name="minus"value='-'/>
+	<script>
+		$('.btn').click(function(){
+			$('input[name=plus]').val();
+			$('input[name=minus]').val();
+			let res = parseInt(plus) + parseInt(minus);
+		})
+	</script>
+</body>
+</html>
