@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>예제</title>
+    <script src="/js/jquery.min.js"></script>
+    <style>
+        .box1, .box2{
+            width: 100px; height: 100px; background-color: yellow;
+        }
+        .box2{display: none;}
+        .img1, .img2{
+            width: 100px; height: 100px; background-color: yellow; display: block;
+        }
+        .img2{display: none;}
+        .btn{display: block;}
+    </style>
+</head>
+<body>
+    <div class="box1">그림1</div>
+    <div class="box2">그림2</div>
+    <img src="/img/D1_2_cat.jfif" alt="" class="img1">
+    <img src="/img/D1_2_cat.jfif" alt="" class="img2">
+    <button class="btn">더보기</button>
+    <script>
+        $('.btn').click(function(){
+            $('.box2').toggle();
+        });
+        $('.btn').click(function(){
+            $('.img2').toggle();
+        });
+    </script>
+</body>
+</html>
