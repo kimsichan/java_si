@@ -106,30 +106,32 @@
 	border: 1px solid red; border-radius: 15px; line-height: 16px; font-size: 12px;
 	margin-left: 3px;
 }
+.menu-box .btn-service-save{
+	background-color: #19ce60;
+  border-color: #00c73c;
+	color: #fff;
+}
+.menu-box .btn-service-init::before{
+	display: inline-block;
+	width: 10px;
+	height: 13px;
+	background: url(https://s.pstatic.net/static/www/img/uit/2021/sp_main_bf79fd.png);
+	background-position: -408px -71px;
+	background-repeat: no-repeat;
+	vertical-align: top;
+	content: '';
+	margin-right: 6px;
+}
 .menu-box .btn-service-set::before{
 	display: inline-block; content: ''; width: 11px; height: 11px; 
 	margin: 2px 5px 0 0;
 	background: url(https://s.pstatic.net/static/www/img/uit/2021/sp_main_bf79fd.png);
 	background-size: 444px 439px; background-position: -407px -306px;
 }
-.menu-box .btn-service-init::before{
-	display: inline-block; content: ''; width: 10px; height: 13px; 
-	margin-right: 6px;
-	background: url(https://s.pstatic.net/static/www/img/uit/2021/sp_main_bf79fd.png);
-	background-size: 444px 439px; background-position: -407px -71px;
-}
-.menu-box .btn-service-all:hover, .menu-box .btn-service-set:hover, .menu-box .btn-service-init:hover, .menu-box .btn-service-save:hover{
+.menu-box .btn-service-all:hover, .menu-box .btn-service-set:hover{
 	text-decoration: underline;
 }
-.menu-box .btn-service-save{
-	background: #19ce60; border-color: #00c73c; color: #fff;
-}
-.menu-box .btn-service-save .service-container{
-	width: 68px;
-	height: 28px;
-	border: 1px solid #dae1e6;
-	border-radius: 2px;
-}
+
 
 
 

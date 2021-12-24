@@ -6,7 +6,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>NAVER</title>
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-	<link rel="stylesheet" href="naver.css">
+	<link rel="stylesheet" href="naver copy.css">
 	<script src="../js/jquery.min.js"></script>
 	<script src="../js/rolling.js"></script>
 </head>
@@ -104,7 +104,7 @@
 				</div>
 				<div class="service-btn-box2">
 					<a href="#" class="btn-service-init">초기화</a>
-					<a href="#" class="btn-service-save btn-green">저장</a>
+					<a href="#" class="btn-service-save">저장</a>
 				</div>
 			</div>
 			<!-- 메일~ 더보기전까지 메뉴 -->
@@ -578,7 +578,6 @@
 				$('.menu-box .btn-more').text('접기');
 			}else{
 				$('.menu-box .btn-more').text('더보기');
-				$('.menu-box .service-box').removeClass('set');
 			}
 			$(this).toggleClass('fold');
 		});
@@ -706,17 +705,13 @@
 			});
 		});
 		$(function(){
-			$('.btn-service-set').click(function(e){
-				e.preventDefault
-				$('.menu-box .service-box').addClass('set');
-				$('.menu-box .service-btn-box1').hide();
-				$('.menu-box .service-btn-box2').show();
-				$('.menu-box .btn-service-save .service-container').replace('.black-menu-box', '.service-container');
+			$('.btn-service-set').click(function(){
+				$('.menu-box .service-item .check-menu, .menu-box .service-btn-box2').show();
+				$('.btn-service-all, .btn-service-set').hide();
 			})
 			$('.btn-service-save').click(function(){
-				$('.menu-box .service-btn-box1').show();
-				$('.menu-box .service-btn-box2').hide();
-				$('.menu-box .service-box').removeClass('set');
+				$('.btn-service-all, .btn-service-set').show();
+				$('.menu-box .service-item .check-menu, .menu-box .service-btn-box2').hide();
 			})
 		})
 		
