@@ -8,9 +8,11 @@
 	<script src="/js/jquery.min.js"></script>
 	<style>
 		.timer-box{
-			height: 50px; width: 500px; border: 1px solid black; overflow: hidden;line-height: 50px;
+			width: 500px; border: 1px solid black; overflow: hidden;line-height: 50px;
 			text-align: center;
 		}
+		.record{ color: blue;}
+		.record:first-child{color: red;}
 	</style>
 </head>
 <body>
@@ -33,6 +35,10 @@
 	<!-- 60이 되면 1 : 00이 되도록 코드를 작성하세요. 00:00 -->
 	<div class="timer-box">
 		<span class="hour">00</span> : <span class="minute">00</span> : <span class="second">00</span> : <span class="millisecond">00</span>
+		<div class="record-box">
+			<div class="record">00 : 00 : 10 : 10 </div>
+			<div class="record">2</div>
+		</div>
 	</div>
 	<button class="btn-start">시작</button>
 	<button class="btn-stop">중지</button>
@@ -67,8 +73,19 @@
 					$('.minute').text(addZero(m));
 					$('.hour').text(addZero(h));
 					$('.millisecond').text(addZero(ms));
+					$('.record-box').empty();
 				},1)
-			})
+				//기록 버튼 클릭 
+				$('.btn-record').click(function(){
+					var strMs = addZero(ms);
+					var strS = addZero(s);
+					var strM = addZero(m);
+					var strH = addZero(h);
+					var strTime = strH + " : " + strM + " : " + strS + " : " + strMs;
+					var strDiv = '<div class="record">'+strTime+'</div>'
+					$('.record-box').prepend(strDiv);
+				});
+			});
 			$('.btn-stop').click(function(){
 				$('.btn-start').toggle();
 				$('.btn-stop').toggle();
