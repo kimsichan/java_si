@@ -10,7 +10,7 @@ import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
 import kr.green.spring.vo.MemberVO;
 
-public class LoginInterceptor extends HandlerInterceptorAdapter{
+public class LoginInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public void postHandle(
 	    HttpServletRequest request, 
@@ -18,13 +18,13 @@ public class LoginInterceptor extends HandlerInterceptorAdapter{
 	    Object handler, 
 	    ModelAndView modelAndView)
 	    throws Exception {
-		//mv.addobject()로 전달한 정보중에 user라는 정보가 있는지 확인해서 
+		//mv.addObject()로 전달한 정보중에 user라는 정보가 있는지 확인해서
 		//user 정보를 가져오는 코드
 	    ModelMap modelMap = modelAndView.getModelMap();
 	    MemberVO user = (MemberVO)modelMap.get("user");
 
 	    if(user != null) {
-	    	//session에 user 정보를 추가	
+	    	//세션에 user 정보를 추가
 	        HttpSession session = request.getSession();
 	        session.setAttribute("user", user);
 	    }

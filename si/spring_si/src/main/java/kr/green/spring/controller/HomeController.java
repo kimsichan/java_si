@@ -22,11 +22,15 @@ public class HomeController {
 	//method는 전달 방식, GET,POST, 생략하면 둘다
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public ModelAndView homeGet(ModelAndView mv) {
+		
 		mv.setViewName("/main/home");
+		//화면으로 데이터를 보낼때 addObject를 사용
+		//addObject("화면에서 사용할 이름", 데이터);
 		mv.addObject("serverTime", "데이터" );
 		
 		return mv;
 	}
+	
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView loginGet(ModelAndView mv) {
 		System.out.println("/login:get :");
@@ -39,10 +43,11 @@ public class HomeController {
 		MemberVO user = memberService.login(member);
 		if(user == null) {
 			mv.setViewName("redirect:/login");
-		}else{
+		}else {
 			mv.addObject("user",user);
-			mv.setViewName("redirect:/login");
+			mv.setViewName("redirect:/");
 		}
+		
 		return mv;
 	}
 	@RequestMapping(value = "/signup", method = RequestMethod.GET)
@@ -59,8 +64,7 @@ public class HomeController {
 		System.out.println("/signup:Post :" + user);
 		if(memberService.signup(user)) {
 			mv.setViewName("redirect:/");
-		}else{
-			mv.addObject("user",user);
+		}else {
 			mv.setViewName("redirect:/signup");
 		}
 		return mv;
@@ -68,6 +72,7 @@ public class HomeController {
 	@RequestMapping(value = "/logout", method = RequestMethod.GET)
 	public ModelAndView logoutGet(ModelAndView mv, HttpServletRequest request) {
 		System.out.println("/logout:get :");
+		//세션에 있는 유저 정보를 삭제
 		request.getSession().removeAttribute("user");
 		mv.setViewName("redirect:/");
 		return mv;

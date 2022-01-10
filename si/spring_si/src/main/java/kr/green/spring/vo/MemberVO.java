@@ -11,11 +11,7 @@ public class MemberVO {
 	private String me_gender;
 	private Date me_birth;
 	private String me_address;
-	@Override
-	public String toString() {
-		return "MemberVO [me_id=" + me_id + ", me_pw=" + me_pw + ", me_name=" + me_name + ", me_gender=" + me_gender
-				+ ", me_birth=" + me_birth + ", me_address=" + me_address + ", me_phone=" + me_phone + "]";
-	}
+	private String me_phone;
 	public String getMe_id() {
 		return me_id;
 	}
@@ -43,13 +39,13 @@ public class MemberVO {
 	public Date getMe_birth() {
 		return me_birth;
 	}
+	
 	public void setMe_birth(String me_birth) {
 		SimpleDateFormat format;
 		try {
 			format = new SimpleDateFormat("yyyy-MM-dd");
 			this.me_birth = format.parse(me_birth);
 		} catch (ParseException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -65,5 +61,10 @@ public class MemberVO {
 	public void setMe_phone(String me_phone) {
 		this.me_phone = me_phone;
 	}
-	private String me_phone;
+	@Override
+	public String toString() {
+		return "MemberVO [me_id=" + me_id + ", me_pw=" + me_pw + ", me_name=" + me_name + ", me_gender=" + me_gender
+				+ ", me_birth=" + me_birth + ", me_address=" + me_address + ", me_phone=" + me_phone + "]";
+	}
+	
 }

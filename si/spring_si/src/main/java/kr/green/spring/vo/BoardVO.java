@@ -1,5 +1,6 @@
 package kr.green.spring.vo;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 public class BoardVO {
@@ -13,13 +14,6 @@ public class BoardVO {
 	private int bd_ori_num;
 	private String bd_del;
 	private Date bd_del_date;
-	
-	@Override
-	public String toString() {
-		return "BoardVO [bd_num=" + bd_num + ", bd_title=" + bd_title + ", bd_contents=" + bd_contents
-				+ ", bd_reg_date=" + bd_reg_date + ", bd_up_date=" + bd_up_date + ", bd_type=" + bd_type + ", bd_me_id="
-				+ bd_me_id + ", bd_ori_num=" + bd_ori_num + ", bd_del=" + bd_del + ", bd_del_date=" + bd_del_date + "]";
-	}
 	public int getBd_num() {
 		return bd_num;
 	}
@@ -40,6 +34,11 @@ public class BoardVO {
 	}
 	public Date getBd_reg_date() {
 		return bd_reg_date;
+	}
+	public String getBd_reg_date_str() {
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+		String str = format.format(bd_reg_date);
+		return str;
 	}
 	public void setBd_reg_date(Date bd_reg_date) {
 		this.bd_reg_date = bd_reg_date;
@@ -79,6 +78,12 @@ public class BoardVO {
 	}
 	public void setBd_del_date(Date bd_del_date) {
 		this.bd_del_date = bd_del_date;
+	}
+	@Override
+	public String toString() {
+		return "BoardVO [bd_num=" + bd_num + ", bd_title=" + bd_title + ", bd_contents=" + bd_contents
+				+ ", bd_reg_date=" + bd_reg_date + ", bd_up_date=" + bd_up_date + ", bd_type=" + bd_type + ", bd_me_id="
+				+ bd_me_id + ", bd_ori_num=" + bd_ori_num + ", bd_del=" + bd_del + ", bd_del_date=" + bd_del_date + "]";
 	}
 	
 }

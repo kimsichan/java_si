@@ -1,11 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
+<html lang="en">
 <head>
 	<meta charset="UTF-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -13,9 +9,7 @@
 	<title>회원가입</title>
 
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
-	<!-- date picker -->
 	<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
-	<!-- 우편번호 -->
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 	<style>
 
@@ -36,13 +30,13 @@
 			<input type="text" class="form-control" placeholder="아이디" name="me_id" value="${user.me_id}">
 		</div>
 		<div class="form-group">
-			<input type="password" class="form-control" placeholder="비밀번호" name="me_pw"value="${user.me_pw}">
+			<input type="password" class="form-control" placeholder="비밀번호" name="me_pw" value="${user.me_pw}">
 		</div>
 		<div class="form-group">
 			<input type="password" class="form-control" placeholder="비밀번호확인" name="me_pw2">
 		</div>
 		<div class="form-group">
-			<input type="text" class="form-control" placeholder="이름" name="me_name"value="${user.me_name}">
+			<input type="text" class="form-control" placeholder="이름" name="me_name" value="${user.me_name}">
 		</div>
 		<div class="form-group">
 			<input type="text" class="form-control" placeholder="생년월일" name="me_birth" id="birth">
@@ -67,9 +61,9 @@
 			<input type="text" id="address" placeholder="주소" class="form-control mb-2">
 			<input type="text" id="detailAddress" placeholder="상세주소" class="form-control mb-2">
 			<input type="hidden" name="me_address">
-			<div class="form-group">
+		</div>
+		<div class="form-group">
 			<input type="text" class="form-control" placeholder="전화번호(-를 포함하여 입력하세요.)" name="me_phone">
-			</div>
 		</div>
 		<button class="btn btn-outline-success col-12">회원가입</button>
 	</form>
@@ -159,8 +153,5 @@
 			}).open();
     }
 	</script>
-	<body>
-		<div class="body"></div>
-	</body>
 </body>
 </html>
