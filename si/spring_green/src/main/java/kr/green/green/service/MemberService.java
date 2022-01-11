@@ -4,5 +4,9 @@ import kr.green.green.vo.MemberVO;
 
 public interface MemberService {
 
-	MemberVO login(MemberVO member);
+
+	boolean singup(MemberVO user);
+
+	MemberVO login(MemberVO user);
+
 }
