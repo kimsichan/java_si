@@ -1,5 +1,6 @@
 package kr.green.green.controller;
 
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,7 +30,7 @@ public class HomeController {
 	}
 	@RequestMapping(value="/signup", method = RequestMethod.POST)
 	public ModelAndView signupPost(ModelAndView mv, MemberVO user) {
-		System.out.println(user);
+//		System.out.println(user);
 		boolean isSignup = memberService.singup(user);
 		if(isSignup) {
 			mv.setViewName("redirect:/");
@@ -54,13 +55,13 @@ public class HomeController {
 		}else {
 			mv.setViewName("redirect:/");
 		}
-		System.out.println(loginUser);
+//		System.out.println(loginUser);
 		return mv;
 	}
 	@RequestMapping(value="/logout")
     public ModelAndView logout(ModelAndView mv, HttpServletRequest request) {
 		request.getSession().removeAttribute("user");
-        mv.setViewName("redirect/");
+        mv.setViewName("redirect:/");
         return mv;
     }
 }
