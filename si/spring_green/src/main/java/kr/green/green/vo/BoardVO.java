@@ -20,9 +20,7 @@ public class BoardVO {
 	private Date bd_del_date;
 	
 	public String getBd_reg_date_str() {
-		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		String str = format.format(bd_reg_date);
-		return str;
+		SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+		return format.format(bd_reg_date);
 	}
-	
 }
