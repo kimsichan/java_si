@@ -2,11 +2,10 @@ package kr.green.spring.interceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 
-public class MemberInterceptor extends HandlerInterceptorAdapter{
+public class MemberInterceptor extends HandlerInterceptorAdapter {
 	@Override
 	public boolean preHandle(HttpServletRequest request, 
 			HttpServletResponse response, 
@@ -17,7 +16,6 @@ public class MemberInterceptor extends HandlerInterceptorAdapter{
 		//세션에 회원정보가 없으면 => 로그인을 안했으면
 		if(user == null) {
 			response.sendRedirect(request.getContextPath()+"/login");
-			//가던 URL로 가지 말고 위에 있는 URL(로그인창)으로 이동
 			return false;
 		}
 		return true;

@@ -11,8 +11,10 @@
 	<link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
 	<script src="https://code.jquery.com/ui/1.13.0/jquery-ui.js"></script>
 	<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/js/jquery.validate.min.js"></script>
+	<script src="<%=request.getContextPath()%>/resources/js/additional-methods.min.js"></script>
 	<style>
-
+	.error{ color : red }
 	</style>
 </head>
 <body>
@@ -28,9 +30,10 @@
 		</div>
 		<div class="form-group">
 			<input type="text" class="form-control" placeholder="아이디" name="me_id" value="${user.me_id}">
+			<button id="idCheck" type="button" class="btn btn-outline-success col-12">아이디 중복 검사</button>
 		</div>
 		<div class="form-group">
-			<input type="password" class="form-control" placeholder="비밀번호" name="me_pw" value="${user.me_pw}">
+			<input type="password" class="form-control" placeholder="비밀번호" name="me_pw" value="${user.me_pw}" id="me_pw">
 		</div>
 		<div class="form-group">
 			<input type="password" class="form-control" placeholder="비밀번호확인" name="me_pw2">
@@ -53,6 +56,7 @@
 				</label>
 			</div>
 		</div>
+		<label id="me_gender-error" class="error" for="me_gender"></label>
 		<div class="form-group">
 			<div class="form-inline mb-2">
 				<input type="text" id="postcode" placeholder="우편번호" class="form-control col-6">
@@ -68,14 +72,34 @@
 		<button class="btn btn-outline-success col-12">회원가입</button>
 	</form>
 	<script>
+		var idCheck = false;
+		
+		$('#idCheck').click(function(){
+			var id = $('[name=me_id]').val();
+			$.ajax({
+				async:false,
+				type:'POST',
+				data: {id : id },
+				url:"<%=request.getContextPath()%>/idcheck",
+				success : function(res){
+			    if(res == 'ok')
+			    	idCheck = true;
+			    else
+			    	idCheck = false;
+			    //idCheck = res == 'ok' ? true : false;
+			    if(idCheck)
+			    	alert('사용 가능한 아이디입니다.');
+			    else
+			    	alert('이미 사용 중인 아이디입니다.');
+				}
+			});
+		});
+		
+		$('[name=me_id]').change(function(){
+			idCheck = false;
+		});
+		
 		$('form').submit(function(){
-			var id = $('[name=me_id]').val().trim();
-			var pw = $('[name=me_pw]').val().trim();
-			var pw2 = $('[name=me_pw2]').val().trim();
-			var name = $('[name=me_name]').val().trim();
-			var birth = $('[name=me_birth]').val().trim();
-			var genderObj = $('[name=me_gender]:checked');
-			var gender = genderObj.length == 0 ? '' : genderObj.val();
 			var isAgree = $('[name=agree]').is(':checked');
 			//동의에 체크되지 않으면
 			if(!isAgree){
@@ -83,36 +107,12 @@
 				$('[name=agree]').focus();
 				return false;
 			}
-			if(id == ''){
-				alert('아이디를 입력하세요.');
-				$('[name=me_id]').focus();
+			
+			if(!idCheck){
+				alert('아이디 중복검사를 하세요.');
 				return false;
 			}
-			if(pw == ''){
-				alert('비밀번호를 입력하세요.');
-				$('[name=me_pw]').focus();
-				return false;
-			}
-			if(pw2 != pw){
-				alert('비밀번호가 일치하지 않습니다.');
-				$('[name=me_pw2]').focus();
-				return false;
-			}
-			if(name == ''){
-				alert('이름을 입력하세요.');
-				$('[name=me_name]').focus();
-				return false;
-			}
-			if(birth == ''){
-				alert('생일을 입력하세요.');
-				$('[name=me_birth]').focus();
-				return false;
-			}
-			if(gender == ''){
-				alert('성별을 선택하세요.');
-				$('[name=me_gender]').focus();
-				return false;
-			}
+			
 			var address = $('#address').val() + ' ' +$('#detailAddress').val();
 			$('[name=me_address]').val(address);
 		});
@@ -152,6 +152,61 @@
 				}
 			}).open();
     }
+		
+		$("form").validate({
+      rules: {
+        me_id: {
+          required : true,
+          regex : /^[A-z]\w{4,7}$/
+        },
+        me_pw: {
+          required : true,
+          //regex: /^(?=\w{5,20}$)\w*(\d[A-z]|[A-z]\d)\w*$/
+          regex: /^\w*(\d[A-z]|[A-z]\d)\w*$/,
+          minlength : 5,
+          maxlength : 20
+        },
+        me_pw2: {
+          equalTo : me_pw
+        },
+        me_name: {
+          required : true
+        },
+        me_gender:{
+        	required : true
+        }
+      },
+      //규칙체크 실패시 출력될 메시지
+      messages : {
+        me_id: {
+          required : "필수로입력하세요",
+          regex : "영문자, 숫자로 이루어져 있으며 5~8자로 구성되어야 한다."
+        },
+        me_pw: {
+          required : "필수로입력하세요",
+          minlength : "최소 {0}글자이상이어야 합니다",
+          maxlength : "최대 {0}글자이하이어야 합니다",
+          regex : "영문자, 숫자로 이루어져있으며 최소 하나이상 포함"
+        },
+        me_pw2: {
+          equalTo : "비밀번호가 일치하지 않습니다."
+        },
+        me_name: {
+          required : "필수로입력하세요"
+        },
+        me_gender: {
+        	required : "필수로입력하세요"
+        }
+      }
+    });
+		$.validator.addMethod(
+	    "regex",
+	    function(value, element, regexp) {
+        var re = new RegExp(regexp);
+        return this.optional(element) || re.test(value);
+	    },
+	    "Please check your input."
+		);
 	</script>
 </body>
 </html>

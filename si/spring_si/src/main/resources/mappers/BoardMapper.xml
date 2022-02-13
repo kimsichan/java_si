@@ -3,18 +3,37 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.green.spring.dao.BoardDAO">
-  <insert id="insertBoard">
+  <insert id="insertBoard" useGeneratedKeys="true" keyProperty="board.bd_num" parameterType="kr.green.spring.vo.BoardVO">
+  	<!-- 파라미터 타입은 보드VO  -->
+  	<!-- 키 프로퍼티는 보드테이블에 bd_num -->
+  	<!-- useGeneratedKeys true는 인설트 후에 키프로퍼티를 넘긴다 -->
+  	<if test="board.bd_ori_num == 0">
   	insert into 
   		board(bd_title, bd_contents, bd_reg_date,
   			bd_type, bd_me_id, bd_ori_num, bd_del)
   		select #{board.bd_title}, #{board.bd_contents}, now(),
   			#{board.bd_type}, #{board.bd_me_id}, 
   			ifnull(max(bd_num),0)+1, 'N'
-  			from board;
+  			from board
+  	</if>
+  	<if test="board.bd_ori_num != 0">
+  	insert into 
+  		board(bd_title, bd_contents, bd_reg_date,
+  			bd_type, bd_me_id, bd_ori_num, bd_del)
+  		values(#{board.bd_title}, #{board.bd_contents}, now(),
+  			#{board.bd_type}, #{board.bd_me_id}, 
+  			#{board.bd_ori_num}, 'N')
+  	</if>
   </insert>
   <select id="getBoardList" resultType="kr.green.spring.vo.BoardVO">
   	select * from board 
-  		where bd_type = #{type} and bd_del = 'N' order by bd_num desc
+  		where bd_type = #{cri.type} and bd_del = 'N' and bd_title like concat('%',#{cri.search} ,'%') 
+  		<!-- 보드 테이블에서 조건이 bd타입이랑 cri타입이 같으면서 del여부가 n이면서 제목이 포함된것들 가져온다 concat (문자열 합치기)-->
+  		order by bd_ori_num desc, bd_num asc
+  		<!-- 정렬방식은 ori_num이 내림차순 bd_num이 오름차순으로 -->
+  		limit #{cri.pageStart}, #{cri.perPageNum}
+  		<!-- limit - db에서  pageStart 번호부터 perPageNum 번호까지만 가져온다 -->
+  		
   </select>
   <select id="getBoard" resultType="kr.green.spring.vo.BoardVO">
   	select * from board where bd_num = #{bd_num} and bd_del = 'N'
@@ -23,7 +42,7 @@
   	update board set
   		bd_del = 'Y',
   		bd_del_date = now()
-  		where bd_num = #{bd_num} 
+  	where bd_num = #{bd_num} 
   </update>
   <update id="updateBoard">
   	update board set
@@ -31,6 +50,49 @@
   		bd_contents = #{board.bd_contents},
   		bd_up_date = #{board.bd_up_date}
   	where bd_num = #{board.bd_num}
+  </update>
+  <insert id="insertFile">
+  	insert into file(fi_ori_name, fi_name, fi_bd_num)
+  		values(#{file.fi_ori_name},#{file.fi_name},#{file.fi_bd_num})
+  </insert>
+  <select id="selectFileList" resultType="kr.green.spring.vo.FileVO">
+  	select * from file 
+  		where fi_bd_num = #{bd_num} and (fi_del != 'Y' || fi_del is null)
+  </select>
+  <update id="deleteFile">
+  	update file set
+  		fi_del = 'Y',
+  		fi_del_date = now()
+  	where fi_num = #{fi_num}
+  </update>
+  <select id="selectCountBoard" resultType="int">
+  	select count(*) from board 
+  		where bd_type = #{cri.type} and bd_del = 'N' and bd_title like concat('%',#{cri.search},'%')
+  </select>
+  <update id="updateViews">
+  	update board set
+  		bd_views = bd_views+1
+  	where bd_num = #{bd_num}
+  </update>
+  <select id="selectLikes" resultType="kr.green.spring.vo.LikesVO">
+  	select * from likes 
+  		where li_bd_num = #{likes.li_bd_num} and li_me_id = #{likes.li_me_id}
+  </select>
+  <insert id="insertLikes">
+  	insert into likes(li_bd_num, li_me_id, li_state)
+  		values(#{likes.li_bd_num},#{likes.li_me_id},#{likes.li_state})
+  </insert>
+  <update id="updateBoardLikes">
+  	update board set
+  		bd_up = (select count(*) from likes 
+  			where li_bd_num = #{likes.li_bd_num} and li_state = 1),
+  		bd_down = (select count(*) from likes 
+  			where li_bd_num = #{likes.li_bd_num} and li_state = -1)
+  	where bd_num = #{likes.li_bd_num}
+  </update>
+  <update id="updateLikes">
+  	update likes set li_state = #{likes.li_state}
+  		where li_bd_num = #{likes.li_bd_num} and li_me_id = #{likes.li_me_id}
   </update>
 </mapper>
 

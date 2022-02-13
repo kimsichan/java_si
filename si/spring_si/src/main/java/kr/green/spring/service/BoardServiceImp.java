@@ -1,13 +1,20 @@
 package kr.green.spring.service;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import kr.green.spring.dao.BoardDAO;
+import kr.green.spring.pagination.Criteria;
+import kr.green.spring.utils.UploadFileUtils;
 import kr.green.spring.vo.BoardVO;
+import kr.green.spring.vo.FileVO;
+import kr.green.spring.vo.LikesVO;
 import kr.green.spring.vo.MemberVO;
 
 @Service
@@ -15,20 +22,29 @@ public class BoardServiceImp implements BoardService {
 	
 	@Autowired
 	BoardDAO boardDao;
+	//업로드할 폴더 경로. 환경에 따라 바꿔줘야함.
+	//집
+	String uploadPath = "E:\\JAVA\\upload";
+	//학원
+	//String uploadPath = "D:\\JAVA_JIK\\upload";
 
 	@Override
-	public void registerBoard(BoardVO board) {
+	public void registerBoard(BoardVO board, List<MultipartFile> files2) throws Exception {
+		// 보드vo가 null 이거나 제목이 없거나 내용이 없거나 작성자가 없을 경우 작성이 안되고 리스트로 이동
 		if(board == null 
 			|| board.getBd_title() == null
 			|| board.getBd_contents() == null
 			|| board.getBd_me_id() ==null)
 			return;
-		boardDao.insertBoard(board);
+		
+		boardDao.insertBoard(board);// 게시글 db에 저장
+		
+		uploadFile(files2, board.getBd_num()); // 첨부파일 저장
 	}
 
 	@Override
-	public List<BoardVO> getBoardList(String type) {
-		return boardDao.getBoardList(type);
+	public List<BoardVO> getBoardList(Criteria cri) {
+		return boardDao.getBoardList(cri);
 	}
 
 	@Override
@@ -66,6 +82,13 @@ public class BoardServiceImp implements BoardService {
 		//게시글의 bd_del을 Y로 수정
 		//다오에게 수정된 게시글을 업데이트하라고 시킴
 		//boardDao.게시글삭제(게시글 번호);
+		List<String> authorityAdmin = new ArrayList<String>();
+		authorityAdmin.add("관리자");
+		authorityAdmin.add("슈퍼 관리자");
+		if( board.getBd_type().equals("공지") &&
+				authorityAdmin.indexOf(user.getMe_authority()) < 0) {
+			return;
+		}
 		boardDao.deleteBoard(bd_num);
 		
 		/*
@@ -73,24 +96,27 @@ public class BoardServiceImp implements BoardService {
 		board.setBd_del_date(new Date());
 		boardDao.updateBoard(board);
 		*/
+		List<FileVO> fileList = boardDao.selectFileList(bd_num);
+		deleteFile(fileList);
+		//deleteFile(boardDao.selectFileList(bd_num));
 	}
 
 	@Override
 	public BoardVO getBoard(Integer bd_num, MemberVO user) {
-		//게시글 번호가 유효한지 체크 =>번호가 없거나 0이하이면 작업할 필요 없음
+		//게시글 번호가 유효한지 체크 => 번호가 없거나 0이하이면 작업할 필요 없음
 		if(bd_num == null || bd_num <= 0)
 			return null;
 		//다오에게 게시글을 가져오라고 시킴
 		//게시글 = 다오.게시글가져옴(게시글 번호)
 		BoardVO board = boardDao.getBoard(bd_num);
-		//가져온 게시글이 있으면 작성자와 user와 비교하여 같은 아이디인치 체크
+		//가져온 게시글이 있으면 작성자와 user와 비교하여 같은 아이디인지 체크
 		if(board == null || !board.getBd_me_id().equals(user.getMe_id()))
 			return null;
 		return board;
 	}
 
 	@Override
-	public void updateBoard(BoardVO board) {
+	public void updateBoard(BoardVO board , List<MultipartFile> files, Integer[] fileNums) {
 		//다오에게 게시글 번호와 일치하는 게시글을 가져오라고 시킴
 		//게시글 = 다오.게시글가져오기(게시글번호)
 		BoardVO dbBoard = boardDao.getBoard(board.getBd_num());
@@ -105,5 +131,127 @@ public class BoardServiceImp implements BoardService {
 		//다오에게 수정된 게시글 정보를 주면서 업데이트 하라고 시킴
 		boardDao.updateBoard(dbBoard);
 		
+		//해당 게시글번호와 일치하는 첨부파일 전체를 가져옴
+		List<FileVO> fileList = boardDao.selectFileList(board.getBd_num());
+		
+		//가져온 첨부파일전체에서 fileNums에 없는 번호들의 첨부파일들을 서버에서 삭제
+		if(fileList != null && fileList.size() != 0 
+				&& fileNums != null && fileNums.length != 0) {
+			List<FileVO> delList = new ArrayList<FileVO>();
+			for(FileVO tmpFileVo : fileList) {
+				for(Integer tmp: fileNums) {
+					if(tmpFileVo.getFi_num() == tmp) {
+						delList.add(tmpFileVo);
+					}
+				}
+			}
+			fileList.removeAll(delList);
+		}
+		//위의 조건문을 거치고 난 뒤 fileList는 삭제할 첨부파일들
+		//DB에서도 삭제
+		deleteFile(fileList);
+		
+		//새로 추가된 첨부파일 있으면 서버에 업로드
+		//새로 추가된 첨부파일을 DB에 추가
+		uploadFile(files, board.getBd_num());
+	}
+
+	@Override
+	public List<FileVO> getFileList(Integer bd_num) {
+		if(bd_num == null || bd_num <= 0)
+			return null;
+		return boardDao.selectFileList(bd_num); //게시글에 대한 파일리스트 가져옴
+	}
+	private void uploadFile(List<MultipartFile>files, Integer bd_num) {
+		//파일이 없으면 리턴 
+		if(files == null)
+			return;
+		// 파일 개수만큼 반복
+		for(MultipartFile tmpFile : files) {
+			// 파일이 null 아니고 오리지날파일이름 길이가 0이 아닌것
+			if(tmpFile != null && tmpFile.getOriginalFilename().length() !=0) {
+				try {
+					// 파일을 저장할 경로
+					// 업로드 유틸스에 잇는 업로드파일 메소드를 이용해서 풀 저장경로를 가져옴 
+					String path = UploadFileUtils.uploadFile(
+						uploadPath, tmpFile.getOriginalFilename(), tmpFile.getBytes());
+					
+					//파일Vo를 생성하면서 vo에 파일 오리지날네임 경로 보드번호를 저장
+					FileVO fileVo = 
+						new FileVO(tmpFile.getOriginalFilename(), path, bd_num);
+					// 파일vo로 첨부파일을 db에 등록
+					boardDao.insertFile(fileVo);
+					
+				}catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		}
+	}
+	
+	private void deleteFile(List<FileVO> fileList) {
+		//파일이 잇을경우
+		if(fileList != null && fileList.size() != 0) {
+			
+			// 파일전체를 반복문
+			for(FileVO tmpFileVo : fileList) {
+				// 파일을 가져온후
+				File f = new File(uploadPath+tmpFileVo.getFi_name().replace("/", File.separator));
+				//파일이 잇으면
+				if(f.exists()) {
+					// 파일 삭제
+					f.delete();
+				}
+				//디비에서 파일정보 삭제
+				boardDao.deleteFile(tmpFileVo.getFi_num());
+			}
+		}
+	}
+
+	@Override
+	public int getTotalCount(Criteria cri) {
+		return boardDao.selectCountBoard(cri);
+	}
+
+	@Override
+	public void updateViews(Integer bd_num) {
+		boardDao.updateViews(bd_num);
+	}
+
+	@Override
+	public String likes(LikesVO likes, MemberVO user) {
+		if(likes == null || user == null)
+			return "fail";
+		//DB에서 해당 유저가 해당 게시글을 추천/비추천했는지 확인하기 위해 DB에서 가져옴
+		LikesVO dbLikes = boardDao.selectLikes(likes);
+		//해당 게시글에 추천/비추천을 한적이 없을 때
+		if(dbLikes == null) {
+			boardDao.insertLikes(likes);
+			//해당 게시글에 추천, 비추천 수를 계산
+			boardDao.updateBoardLikes(likes);
+			return ""+likes.getLi_state();
+		}
+		//취소하는 경우 => li_state = 0
+		if(dbLikes.getLi_state() == likes.getLi_state()) {
+			likes.setLi_state(0);
+			boardDao.updateLikes(likes);
+			boardDao.updateBoardLikes(likes);
+			return "0";
+		}
+		//추천=>비추천 또는 비추천=>추천, 취소=>추천, 취소=>비추천으로 바뀌는 경우 
+		boardDao.updateLikes(likes);
+		boardDao.updateBoardLikes(likes);
+		return ""+likes.getLi_state();
+	}
+
+	@Override
+	public String viewLikes(LikesVO likes, MemberVO user) {
+		if(likes == null || user == null) {
+			return "0";
+		}
+		LikesVO dbLikes = boardDao.selectLikes(likes);
+		if(dbLikes == null)
+			return "0";
+		return "" + dbLikes.getLi_state();
 	}
 }
